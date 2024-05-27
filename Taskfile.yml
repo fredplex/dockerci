@@ -36,3 +36,12 @@ tasks:
             Push the docker image
     cmds:
       - docker push "{{.REGISTRY}}/{{.IMAGE}}:{{.GIT_HASH}}"
+
+  docker-publish:
+    deps:
+      - docker-push
+    desc: |
+            Publish this release as LATEST
+    cmds: 
+      - docker tag "{{.REGISTRY}}/{{.IMAGE}}:{{.GIT_HASH}}" "{{.REGISTRY}}/{{.IMAGE}}:latest"
+      - docker push "{{.REGISTRY}}/{{.IMAGE}}:latest"
